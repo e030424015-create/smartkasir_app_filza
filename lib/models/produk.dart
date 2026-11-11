@@ -1,65 +1,111 @@
+// Blueprint / Struktur Data (Model) entitas produk kasir ritel SmartKasir
 class Produk {
-  final int id;
+  final int? id;
+  final String kodeProduk;
   final String nama;
-  final double harga;
   final String kategori;
-  final String pathGambar;
+  final double hargaBeli;
+  final double hargaJual;
+  final int stok;
+  final String gambarUrl;
   final int diskonPersen;
 
-  Produk({
-    required this.id,
+  const Produk({
+    this.id,
+    required this.kodeProduk,
     required this.nama,
-    required this.harga,
     required this.kategori,
-    required this.pathGambar,
+    required this.hargaBeli,
+    required this.hargaJual,
+    required this.stok,
+    required this.gambarUrl,
     this.diskonPersen = 0,
   });
 
-  double get hargaSetelahDiskon {
-    if (diskonPersen <= 0) return harga;
-    return harga - (harga * (diskonPersen / 100));
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'kode_produk': kodeProduk,
+      'nama_produk': nama,
+      'kategori': kategori,
+      'harga_beli': hargaBeli,
+      'harga_jual': hargaJual,
+      'stok': stok,
+      'gambar_path': gambarUrl,
+      'diskon_persen': diskonPersen,
+      'created_at': DateTime.now().toIso8601String(),
+    };
+  }
+
+  factory Produk.fromMap(Map<String, dynamic> map) {
+    return Produk(
+      id: map['id'] as int?,
+      kodeProduk: map['kode_produk'] as String,
+      nama: map['nama_produk'] as String,
+      kategori: map['kategori'] as String,
+      hargaBeli: (map['harga_beli'] as num).toDouble(),
+      hargaJual: (map['harga_jual'] as num).toDouble(),
+      stok: map['stok'] as int,
+      gambarUrl: map['gambar_path'] as String? ?? '',
+      diskonPersen: map['diskon_persen'] as int? ?? 0,
+    );
   }
 }
 
-List<Produk> daftarProdukDummy = [
-  Produk(
-    id: 1,
-    nama: 'Kopi Susu Gula Aren',
-    harga: 18000,
+final List<Produk> produkAwalSQLite = [
+  const Produk(
+    kodeProduk: 'PRD-001',
+    nama: 'Kopi Susu Gula Aren 250ml',
     kategori: 'Minuman',
-    pathGambar: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500',
-    diskonPersen: 20, // Tantangan Live Tweak 3: Diskon 20%
+    hargaBeli: 10000,
+    hargaJual: 18000,
+    stok: 24,
+    gambarUrl: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500',
   ),
-  Produk(
-    id: 2,
-    nama: 'Roti Bakar Cokelat',
-    harga: 15000,
+  const Produk(
+    kodeProduk: 'PRD-002',
+    nama: 'Roti Bakar Cokelat Keju',
     kategori: 'Makanan',
-    pathGambar: 'https://images.unsplash.com/photo-1584776296944-ab6fb57b0bdd?w=500',
-    diskonPersen: 0,
+    hargaBeli: 8000,
+    hargaJual: 15000,
+    stok: 5,
+    gambarUrl: 'https://images.unsplash.com/photo-1584776296944-ab6fb57b0bdd?w=500',
   ),
-  Produk(
-    id: 3,
-    nama: 'Croissant Butter',
-    harga: 22000,
-    kategori: 'Makanan',
-    pathGambar: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500',
-    diskonPersen: 0,
-  ),
-  Produk(
-    id: 4,
-    nama: 'Matcha Latte',
-    harga: 24000,
+  const Produk(
+    kodeProduk: 'PRD-003',
+    nama: 'Matcha Latte Ice',
     kategori: 'Minuman',
-    pathGambar: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=500',
-    diskonPersen: 0,
+    hargaBeli: 12000,
+    hargaJual: 22000,
+    stok: 0,
+    gambarUrl: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=500',
   ),
-  Produk(
-    id: 5,
-    nama: 'Kentang Goreng',
-    harga: 12000,
-    kategori: 'Camilan',
-    pathGambar: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?w=500',
-    diskonPersen: 0,
+  const Produk(
+    kodeProduk: 'PRD-004',
+    nama: 'Nasi Goreng Banjar Spesial',
+    kategori: 'Makanan',
+    hargaBeli: 15000,
+    hargaJual: 25000,
+    stok: 12,
+    gambarUrl: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500',
+    diskonPersen: 10,
+  ),
+  const Produk(
+    kodeProduk: 'PRD-005',
+    nama: 'Keripik Singkong Pedas Manis',
+    kategori: 'Snack',
+    hargaBeli: 6000,
+    hargaJual: 12000,
+    stok: 30,
+    gambarUrl: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500',
+  ),
+  const Produk(
+    kodeProduk: 'PRD-006',
+    nama: 'Pisang Goreng Pasir Crispy',
+    kategori: 'Snack',
+    hargaBeli: 7000,
+    hargaJual: 14000,
+    stok: 8,
+    gambarUrl: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500',
   ),
 ];
